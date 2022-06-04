@@ -16,16 +16,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<CategoriesModel> categories = List();
-
-  List<WallpaperModel> wallpapers = List();
+  List<CategoriesModel> categories = [];
+  List<WallpaperModel> wallpapers = [];
 
   TextEditingController searchController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
+
+  bool isBottom = false;
+
+  int imageCount = 79;
+  int pageNumber = 1;
 
 //getting api data
-  getTrendingWallpaper() async {
+  getTrendingWallpaper(int imageCount) async {
     var res = await http.get(
-        Uri.parse('https://api.pexels.com/v1/curated?per_page=16'),
+        // Uri.parse('https://api.pexels.com/v1/curated?per_page=$imageCount'),
+        Uri.parse(
+            'https://api.pexels.com/v1/curated?page=$pageNumber&per_page=$imageCount'),
         headers: {'Authorization': apiKey});
     print(res.body.toString());
 
@@ -43,8 +50,26 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     categories = getCategories();
-    getTrendingWallpaper();
+    getTrendingWallpaper(imageCount);
     super.initState();
+
+    _scrollController.addListener(() {
+      //reached bottom
+      if (_scrollController.offset >=
+              _scrollController.position.maxScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        setState(() => isBottom = true);
+        print('bottom');
+      }
+
+      //Reached top
+      if (_scrollController.offset <=
+              _scrollController.position.minScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        setState(() => isBottom = false);
+        print('top');
+      }
+    });
   }
 
   @override
@@ -56,6 +81,7 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Container(
           child: Column(
             children: [
@@ -115,6 +141,52 @@ class _HomeState extends State<Home> {
                     }),
               ),
               wallpapersList(context: context, wallpapers: wallpapers),
+              isBottom == true
+                  ? Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        onPressed: () {
+                          print('tapped');
+                          // pageNumber++;
+                          // print(pageNumber.toString() + ' Page Number');
+                          // imageCount = 79;
+                          // getTrendingWallpaper(imageCount);
+                        },
+                        child: Text('Load More.'),
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.blueAccent)),
+                      ),
+                    )
+                  // ? GestureDetector(
+                  //     onTap: () {
+                  //       print('tapped');
+                  //       pageNumber++;
+                  //       print(pageNumber.toString() + ' Page Number');
+                  //       imageCount = 79;
+                  //       getTrendingWallpaper(imageCount);
+                  //     },
+                  //     child: Container(
+                  //       padding: EdgeInsets.only(bottom: 30.0),
+                  //       child: Text('Load More'),
+                  //     ),
+                  //   )
+                  // ? Positioned(
+                  //     bottom: 20,
+                  //     left: 18,
+                  //     right: 18,
+                  //     child: Container(
+                  //         alignment: Alignment.center,
+                  //         height: 50,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.orangeAccent,
+                  //           borderRadius: BorderRadius.circular(15),
+                  //         ),
+                  //         child: Text('Your widget at the end')))
+                  : Container(),
+              SizedBox(
+                height: 25.0,
+              ),
             ],
           ),
         ),
