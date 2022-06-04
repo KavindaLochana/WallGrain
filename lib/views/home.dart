@@ -23,9 +23,9 @@ class _HomeState extends State<Home> {
   ScrollController _scrollController = ScrollController();
 
   bool isBottom = false;
-
-  int imageCount = 79;
+  int imageCount = 80;
   int pageNumber = 1;
+  bool _showBackToTopButton = false;
 
 //getting api data
   getTrendingWallpaper(int imageCount) async {
@@ -62,6 +62,15 @@ class _HomeState extends State<Home> {
         print('bottom');
       }
 
+      //condition for to show back to top button.
+      setState(() {
+        if (_scrollController.offset >= 400) {
+          _showBackToTopButton = true;
+        } else {
+          _showBackToTopButton = false;
+        }
+      });
+
       //Reached top
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
@@ -70,6 +79,15 @@ class _HomeState extends State<Home> {
         print('top');
       }
     });
+  }
+
+  //this triggered when user tap back-to-top bbutton
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(seconds: 3),
+      curve: Curves.linear,
+    );
   }
 
   @override
@@ -191,6 +209,12 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+      floatingActionButton: _showBackToTopButton == false
+          ? null
+          : FloatingActionButton(
+              onPressed: _scrollToTop,
+              child: const Icon(Icons.arrow_upward),
+            ),
     );
   }
 }
