@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:WallGrain/darkMode/darkThemeProvider.dart';
+import 'package:WallGrain/darkMode/darkThemeStyles.dart';
 import 'package:WallGrain/data/data.dart';
 import 'package:WallGrain/model/categories_model.dart';
 import 'package:WallGrain/model/wallpaper_model.dart';
@@ -9,6 +11,7 @@ import 'package:WallGrain/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -92,11 +95,25 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+
       appBar: AppBar(
         title: brandName(),
         elevation: 0.0,
+        actions: [
+          // IconButton(
+          //     onPressed: () {
+          //       themeChange.darkTheme;
+          //     },
+          //     icon: Icon(Icons.toggle_off)),
+          Checkbox(
+              value: themeChange.darkTheme,
+              onChanged: (bool value) {
+                themeChange.darkTheme = value;
+              }),
+        ],
       ),
       body: SingleChildScrollView(
         controller: _scrollController,

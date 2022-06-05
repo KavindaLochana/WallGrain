@@ -124,10 +124,23 @@ class _ImageViewState extends State<ImageView> {
     if (Platform.isIOS) {
       /*Map<PermissionGroup, PermissionStatus> permissions =
           */
-      await PermissionHandler().requestPermissions([PermissionGroup.photos]);
+      // await PermissionHandler().requestPermissions([PermissionGroup.photos]);
+      // await Permission.photos.request();
+      var pStatus = await Permission.photos.status;
+      if (pStatus.isGranted) {
+      } else {
+        Map<Permission, PermissionStatus> pStatus =
+            await [Permission.photos].request();
+      }
     } else {
-      /* PermissionStatus permission = */ await PermissionHandler()
-          .checkPermissionStatus(PermissionGroup.storage);
+      // /* PermissionStatus permission = */ await PermissionHandler()
+      //     .checkPermissionStatus(PermissionGroup.storage);
+      var pStatus = await Permission.photos.status;
+      if (pStatus.isGranted) {
+      } else {
+        Map<Permission, PermissionStatus> pStatus =
+            await [Permission.photos].request();
+      }
     }
   }
 }

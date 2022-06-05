@@ -21,15 +21,17 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  cached_network_image: ^3.2.1
   cupertino_icons: ^1.0.0
+  dio: ^4.0.4
   flutter:
     sdk: flutter
   http: ^0.13.4
-  cached_network_image: ^2.5.1
   image_gallery_saver: ^1.7.1
-  permission_handler: ^4.2.0+hotfix.3
+  permission_handler: ^9.2.0
+  provider: ^6.0.3
   random_string: ^2.1.0
-  dio: ^4.0.4
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:
