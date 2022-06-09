@@ -1,6 +1,6 @@
 # WallGrain
 
-A new Flutter project.
+Now support dartk mode.
 
 ## Powerd by Pexels API
 
@@ -10,8 +10,6 @@ You can read more details about this project and another projects from my websit
 
 ## Features to come
 
-- Dark Mode
-- Infinite Scroll
 - Better Search
 - Better UI
 
