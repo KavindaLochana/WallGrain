@@ -108,11 +108,17 @@ class _HomeState extends State<Home> {
           //       themeChange.darkTheme;
           //     },
           //     icon: Icon(Icons.toggle_off)),
-          Checkbox(
+          // Checkbox(
+          //     value: themeChange.darkTheme,
+          //     onChanged: (bool value) {
+          //       themeChange.darkTheme = value;
+          //     }),
+          Switch(
               value: themeChange.darkTheme,
               onChanged: (bool value) {
+                print('swicting to dark mode');
                 themeChange.darkTheme = value;
-              }),
+              })
         ],
       ),
       body: SingleChildScrollView(
@@ -131,6 +137,7 @@ class _HomeState extends State<Home> {
                   children: [
                     Expanded(
                       child: TextField(
+                        style: TextStyle(color: Colors.black),
                         controller: searchController,
                         decoration: InputDecoration(
                           hintText: 'Search Wallpaper',

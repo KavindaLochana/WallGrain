@@ -8,7 +8,7 @@ Widget brandName() {
       text: '',
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
       children: const <TextSpan>[
-        TextSpan(text: 'Wall', style: TextStyle(color: Colors.black87)),
+        TextSpan(text: 'Wall', style: TextStyle(color: Color(0xffed9121))),
         TextSpan(text: 'Grain', style: TextStyle(color: Colors.white)),
       ],
     ),

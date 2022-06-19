@@ -68,6 +68,7 @@ class _SearchState extends State<Search> {
                   children: [
                     Expanded(
                       child: TextField(
+                        style: TextStyle(color: Colors.black),
                         controller: searchController,
                         decoration: InputDecoration(
                           hintText: 'Search Wallpaper',
